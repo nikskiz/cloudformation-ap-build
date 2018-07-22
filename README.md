@@ -50,7 +50,7 @@ A cloud architecture diagram(s)
  * Can be found https://github.com/nikskiz/cloudformation-ap-build/blob/master/AWS%20ECS%20Solution.pdf 
  
 AWS Code Build/AWS Code Pipeline to guarantee a repeatable deployment process
- * Unfortunately didn't have time
+ * Unfortunately, didn't have time
  
 Use ECS
  * Achieved in the design
