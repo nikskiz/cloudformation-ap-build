@@ -1,6 +1,18 @@
 # cloudformation-ap-build
 Cloudformation build for Assembly Payments application solution design exercise
 
+## Running the Scripts
+Packages required to be installed
+ * AWS CLI
+ * Docker
+
+Ensure that you have configured your linux instance with AWS crednetials. This can be tested via
+`aws ec2 describe-instances`
+
+Clone the repository and run the following
+`sudo bash build-cf-stacks.sh`
+NOTE: reuqired to use `sudo`
+
 * Fork the public repo of the app (https://github.com/AssemblyPayments/simple-go-web-app)
   * Repo has been forked and new code added to accomidate for database connectivity. https://github.com/nikskiz/simple-go-web-app
 
