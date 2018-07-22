@@ -43,7 +43,7 @@ Ensure that the web servers are available in at least two (2) AWS availability z
      * Application level monitoring with custom dashboards
      * AWS Code Build/AWS Code Pipeline to provide easy deployments and automation in releases.
 Redirect any HTTP requests to HTTPS.
- * Unfortunately, didn't have time to redirect HTTP to HTTPS as this required ACM and route53, otherwise redirecting HTTP to HTTPS on a default loadbalancer will show a certificate error.
+ * Unfortunately, didn't have time to redirect HTTP to HTTPS as this requires ACM and route53, otherwise redirecting HTTP to HTTPS on a default loadbalancer will show a certificate error.
  
 ## Bonus
 A cloud architecture diagram(s)
