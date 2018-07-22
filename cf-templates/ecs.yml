@@ -29,10 +29,6 @@ Parameters:
         Description: The stackname for the Security Group creation
         Type: String
 
-    KeyName:
-        Description: Name of the KeyPair to assign to the instance
-        Type: String
-
 Resources:
 
     ECSCluster:
@@ -75,7 +71,6 @@ Resources:
     ECSLaunchConfiguration:
         Type: AWS::AutoScaling::LaunchConfiguration
         Properties:
-            KeyName: !Ref KeyName
             ImageId:  !Ref ImageId
             InstanceType: !Ref InstanceType
             SecurityGroups:
