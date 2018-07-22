@@ -40,7 +40,7 @@ Ensure that the web servers are available in at least two (2) AWS availability z
      * Private Hosted Zone, allows services such as RDS to be re-created if needed (I.E an RDS being restored will create a new CNAME)
      * ACM certificate to manage the hostname
      * Lambda functions to report on events to communications channels (i.e slack)
-     * Application level monitoring and nice dashboards to follow
+     * Application level monitoring with custom dashboards
      * AWS Code Build/AWS Code Pipeline to provide easy deployments and automation in releases.
 Redirect any HTTP requests to HTTPS.
  * Unfortunately, didn't have time to redirect HTTP to HTTPS as this required ACM and route53, otherwise redirecting HTTP to HTTPS on a default loadbalancer will show a certificate error.
