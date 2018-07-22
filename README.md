@@ -30,7 +30,7 @@ Using AWS Cloudformation, automate the deployment of the app addressing security
     * LoadBalancer Stack - This stack is creating the default target group and listener. The listener will be update for the ECS solution in the below stacks.
       * Improvements can be to redirect HTTP to HTTPS with a certificate installed via ACM and R53 to approve the certification in an automated fashion.
     * ECR Stack - This stack will create the repository for the docker image.
-    * ECS Stack - This create the cluster which defines the instances in an ASG. This stack will associate the cluster to the LB target group created above. The AMI is specific is the latest ECS AMI by AWS. A recommendation would be to manage a bootstrapped AMI and release with a CICD platform.
+    * ECS Stack - This creates the cluster which defines the instances in an ASG. This stack will associate the cluster to the LB target group created above. The AMI specified is the latest ECS AMI. A recommendation would be to manage a bootstrapped AMI and release with a CICD platform.
       * Improvements can be to use FARGATE as a managed instance service rather than managing the instances yourself.
     * ECS Service Stack - This stack will provision the service and define the task definitions which will run as tasks in the cluster. It utilizes the ECR image repository. The stack also includes sending logs to cloudwatch (no need to login to servers to retrieve logs)
   
