@@ -13,6 +13,8 @@ Clone the repository and run the following
 `sudo bash build-cf-stacks.sh`
 NOTE: reuqired to use `sudo`
 
+# Base Requirements
+
 * Fork the public repo of the app (https://github.com/AssemblyPayments/simple-go-web-app)
   * Repo has been forked and new code added to accomidate for database connectivity. https://github.com/nikskiz/simple-go-web-app
 
