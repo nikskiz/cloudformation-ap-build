@@ -1,0 +1,71 @@
+Description:
+    This template deploys an ECR Repository.
+
+Parameters:
+
+    EnvironmentName:
+        Description: An environment name that will be prefixed to resource names
+        Type: String
+
+    RepositoryName:
+        Description: Name for the ECR repository to be created
+        Type: String
+
+
+Resources:
+
+    ECRRole:
+        Type: AWS::IAM::Role
+        Properties:
+            Path: /
+            RoleName: !Sub ${EnvironmentName}-ECRRole-${AWS::Region}
+            AssumeRolePolicyDocument: |
+                {
+                    "Statement": [{
+                        "Action": "sts:AssumeRole",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "Service": "ec2.amazonaws.com"
+                        }
+                    }]
+                }
+            Policies:
+                - PolicyName: ecr-role
+                  PolicyDocument: |
+                    {
+                        "Statement": [{
+                            "Effect": "Allow",
+                            "Action": [
+                                "ecr:BatchCheckLayerAvailability",
+                                "ecr:BatchGetImage",
+                                "ecr:GetDownloadUrlForLayer",
+                                "ecr:GetAuthorizationToken"
+                            ],
+                            "Resource": "*"
+                        }]
+                    }
+
+    ECR:
+        Type: AWS::ECR::Repository
+        Properties:
+            RepositoryName: !Ref RepositoryName
+            RepositoryPolicyText:
+                Version: "2012-10-17"
+                Statement:
+                  -
+                    Sid: AllowPushPull
+                    Effect: Allow
+                    Principal:
+                      AWS:
+                        # - !Ref ECRRole
+                        - Fn::GetAtt:
+                          - ECRRole
+                          - Arn
+                    Action:
+                      - "ecr:GetDownloadUrlForLayer"
+                      - "ecr:BatchGetImage"
+                      - "ecr:BatchCheckLayerAvailability"
+                      - "ecr:PutImage"
+                      - "ecr:InitiateLayerUpload"
+                      - "ecr:UploadLayerPart"
+                      - "ecr:CompleteLayerUpload"

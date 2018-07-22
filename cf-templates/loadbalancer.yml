@@ -1,0 +1,98 @@
+Description: >
+    This template deploys an Application Load Balancer that exposes our various ECS services.
+    We create them it a seperate nested template, so it can be referenced by all of the other nested templates.
+Parameters:
+
+    EnvironmentName:
+        Description: An environment name that will be prefixed to resource names
+        Type: String
+
+    VPCStackName:
+        Description: The stackname for the VPC creation
+        Type: String
+
+Resources:
+
+    LoadBalancer:
+        Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+        Properties:
+            Name: !Ref EnvironmentName
+            Subnets:
+                - Fn::ImportValue:
+                    !Sub "${VPCStackName}-PublicSubnet1"
+                - Fn::ImportValue:
+                    !Sub "${VPCStackName}-PublicSubnet2"
+            SecurityGroups:
+                - !Ref LBSecurityGroup
+            Tags:
+                - Key: Name
+                  Value: !Ref EnvironmentName
+
+    LoadBalancerListener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        Properties:
+            LoadBalancerArn: !Ref LoadBalancer
+            Port: 80
+            Protocol: HTTP
+            DefaultActions:
+                - Type: forward
+                  TargetGroupArn: !Ref DefaultTargetGroup
+
+    # We define a default target group here, as this is a mandatory Parameters
+    # when creating an Application Load Balancer Listener. This is not used, instead
+    # a target group is created per-service in each service template (../services/*)
+    DefaultTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        Properties:
+            Name: !Sub ${EnvironmentName}-default
+            VpcId:
+                Fn::ImportValue:
+                    !Sub "${VPCStackName}-VPCID"
+            Port: 80
+            Protocol: HTTP
+
+    LBSecurityGroup:
+        Type: AWS::EC2::SecurityGroup
+        Properties:
+            VpcId:
+              Fn::ImportValue:
+                !Sub "${VPCStackName}-VPCID"
+            GroupDescription: Access to the ECS Instance
+            SecurityGroupIngress:
+                - IpProtocol: tcp
+                  FromPort: '80'
+                  ToPort: '80'
+                  CidrIp:
+                      Fn::ImportValue:
+                        !Sub "${VPCStackName}-VPCCidrBlock"
+                - IpProtocol: tcp
+                  FromPort: '80'
+                  ToPort: '80'
+                  CidrIp: 0.0.0.0/0
+            Tags:
+                - Key: Name
+                  Value: !Sub ${EnvironmentName} Load Balancer Security Group
+
+
+Outputs:
+
+    LoadBalancer:
+        Description: A reference to the Application Load Balancer
+        Value: !Ref LoadBalancer
+
+    DefaultTargetGroup:
+        Description: A reference to the Application Load Balancer target group
+        Value: !Ref DefaultTargetGroup
+        Export:
+            Name: !Sub "${AWS::StackName}-DefaultTargetGroup"
+
+
+    LoadBalancerUrl:
+        Description: The URL of the ALB
+        Value: !GetAtt LoadBalancer.DNSName
+
+    Listener:
+        Description: A reference to a port 80 listener
+        Value: !Ref LoadBalancerListener
+        Export:
+            Name: !Sub "${AWS::StackName}-ListenerARN"
