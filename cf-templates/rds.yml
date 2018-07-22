@@ -54,3 +54,10 @@ Resources:
             Tags:
                 - Key: Name
                   Value: !Sub ${EnvironmentName} RDS
+Outputs:
+
+    RDSEndPoint:
+        Description: A reference to the RDS Hostname
+        Value: !GetAtt RDS.Endpoint.Address
+        Export:
+            Name: !Sub "${AWS::StackName}-RDSEndPoint"
