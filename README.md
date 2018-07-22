@@ -22,7 +22,7 @@ Use Linux Instances (We don't use Windows)
   * Used ECS Solution (AWS Linux Based)
 
 Using AWS Cloudformation, automate the deployment of the app addressing security, cost optimisation, availability and reliability
-  * Cloudformation has been the choose of technology and the templates have been divided into different stacks
+  * Cloudformation has utilized and the templates have been divided into different stacks
     * VPC Stack - This stack deploys a VPC with a CIDR address of 172.20.0.0/23
     * Security Group Stack - This stack was deployed as an attempt to centralize security groups, however later down the track there were issues when trying to add more security groups. You may notice some stacks include their own security groups
     * RDS Stack - This stack separates the application from the database. This will create a postgresSQL server in the private subnets.
