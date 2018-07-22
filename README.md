@@ -31,12 +31,15 @@ Ensure that the web servers are available in at least two(2) AWS availability zo
 Redirect any HTTP requests to HTTPS.
  * Unfortunately didn't have time to redirect HTTP to HTTPS as this required ACM and route53, otherwise redirecting HTTP to HTTPS on a default loadbalancer will show a certificate error.
  
-## Bonus ##
+## Bonus
 A cloud architecture diagram(s)
  * Can be found https://github.com/nikskiz/cloudformation-ap-build/blob/master/AWS%20ECS%20Solution.pdf 
+ 
 AWS Code Build/AWS Code Pipeline to guarantee a repeatable deployment process
  * Unfortunately didn't have time
+ 
 Use ECS
  * Achieved in the design
+ 
 Add a Database to your automation and have your application serve the data stored there.
  * Achieved in the design
