@@ -41,9 +41,7 @@ Resources:
 
             GroupDescription: Access to the ECS Instance
             SecurityGroupIngress:
-                - IpProtocol: tcp
-                  FromPort: '8080'
-                  ToPort: '8080'
+                - IpProtocol: '-1'
                   CidrIp:
                       Fn::ImportValue:
                         !Sub "${VPCStackName}-VPCCidrBlock"
